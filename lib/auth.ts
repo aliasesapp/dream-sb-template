@@ -38,6 +38,12 @@ function getEnabledProviders() {
 
 const { handlers, auth, signIn, signOut } = NextAuth({
   providers: getEnabledProviders(),
+  callbacks: {
+    signIn({ profile }) {
+      // ends with supabase.com or aliases.app
+      return profile.email.endsWith("@supabase.com") || profile.email.endsWith("@aliases.app")
+    }
+  },
 })
 
 export { handlers, auth, signIn, signOut }
